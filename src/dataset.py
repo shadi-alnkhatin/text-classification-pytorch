@@ -46,15 +46,7 @@ def label_pipeline(label):
  
   
 def collate_batch(batch):
-    """
-    Custom collate function for the DataLoader.
- 
-    Problem it solves:
-        Articles have different lengths. We can't stack them into a
-        fixed-size tensor directly. Instead we:
-          1. Flatten all token lists into ONE long 1D tensor
-          2. Track where each article starts using "offsets" because we need it for the embedding bag layer
-    """
+
     label_list, text_list, offsets = [], [], [0]
  
     for label, text in batch:
@@ -72,16 +64,7 @@ def collate_batch(batch):
  
  
 def get_dataloaders(batch_size=64, val_ratio=0.05):
-    """
-    Loads AG_NEWS and returns three DataLoaders:
-        train_loader, val_loader, test_loader
-        
-    Returns:
-        train_loader : DataLoader
-        val_loader   : DataLoader
-        test_loader  : DataLoader
-        vocab_size   : int  (needed to build the model)
-    """
+ 
     train_iter, test_iter = AG_NEWS()
     train_dataset = to_map_style_dataset(train_iter)
     test_dataset  = to_map_style_dataset(test_iter)
